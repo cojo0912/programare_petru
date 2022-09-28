@@ -33,20 +33,24 @@ void printString(char str[]){
 }
 
 void readLine(char str[], int lenght){
-    int i;
-    
-    for(i = 0; i < lenght; i++){
-        
-        str[i] = getchar();
-        
-        if(str[i] == '\n')
+    int i = 0;
+    char x;
+    do
+    {
+        x = getchar();
+        if(i < lenght - 1)
         {
+            if(x == '\n')
+                str[i] = '\0';
+            else 
+                str[i] = x;
+        }
+        
+        if(i == lenght - 1)
             str[i] = '\0';
-            break;
-        }            
-    }
-    
-    
+
+        i++;
+    } while (x!='\n');
 }
 
 int findFirstOccurrence(char str[], char aChar)
@@ -153,7 +157,7 @@ int main(void){
             default:
                 printf("Unknown command '%c'\n",string[0]);
                 break;
-                                
+
         }
     } while (string[0] != 'q');
 
