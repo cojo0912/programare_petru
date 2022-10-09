@@ -4,6 +4,82 @@
 #define BASIC_LENGTH 100
 
 //https://cplusplus.com/reference/cstdlib/free/
+
+struct person {
+    char *name;
+    float height;
+};
+
+//returneaza 1 daca sunt ordonate crescator
+//returneaza -1 daca sunt ordonate descrescator
+int comparatie(struct person p1, struct person p2)
+{
+    if(p1.height < p2.height)
+        return 1;
+
+    if(p1.height > p2.height)
+        return -1;
+
+    if(p1.height == p2.height)
+    {
+        if(strcmp(p1.name, p2.name) > 0)
+            return -1;
+        else
+            return 1;
+    } 
+}
+
+void printPersons (struct person persons[], int nrPersons, int from, int to)
+{
+    if(to > nrPersons)
+        return;
+
+    for(int i=from; i<=to; i++)
+        if(persons[i].name != NULL)
+            printf("(%s %f) ", persons[i].name, persons[i].height);
+    printf("\n");
+}
+
+void bubbleSort(struct person persons[], int nrPersons, int *swapped)
+{
+    *swapped = 0;
+    int i, j;
+    for (i = 0; i < nrPersons - 1; i++)
+        for (j = 0; j < nrPersons - i - 1; j++)
+            if (comparatie(persons[j], persons[j+1])==-1)
+            {
+                struct person aux;
+                aux = persons[j];
+                persons[j] = persons[j+1];
+                persons[j+1] = aux;
+                (*swapped)++;
+                printf("after swap "); printPersons(persons, nrPersons, 0, nrPersons-1);
+            }
+    printf("nr of swaps %d\n", *swapped);
+}
+
+void insertPerson(struct person persons[], int nrPersons, int newEntry, char *newName, float newHeight)
+{
+    //verific daca indexul este valid
+    //
+    if(persons[newEntry].name == NULL)
+    {
+        //poti sa adaugi
+        persons[newEntry].name = (char *) malloc(sizeof(char) * (strlen(newName)+1));
+        strcpy(persons[newEntry].name, newName);
+        persons[newEntry].height = newHeight;
+    }else
+    {
+        //pozitia este deja ocupara deci, eroare
+    }
+}
+
+void replacePerson(struct person persons[], int nrPersons,  int newEntry, char *newName, float newHeight)
+{
+    //verifici daca exista, daca exista ii eliberezi memoria il faci la loc NULL si 0.0
+    //il adaugi oricum
+}
+
 //https://www.geeksforgeeks.org/merge-sort/
 void merge(int arr[], int l, int m, int r)
 {
@@ -69,82 +145,6 @@ void mergeSort(int arr[], int l, int r)
     }
 }
 
-struct person {
-    char *name;
-    float height;
-};
-
-//returneaza 1 daca sunt ordonate crescator
-//returneaza -1 daca sunt ordonate descrescator
-int comparatie(struct person p1, struct person p2)
-{
-    if(p1.height < p2.height)
-        return 1;
-
-    if(p1.height > p2.height)
-        return -1;
-
-    if(p1.height == p2.height)
-    {
-        if(strcmp(p1.name, p2.name) > 0)
-            return -1;
-        else
-            return 1;
-    } 
-}
-
-void printPersons (struct person persons[], int nrPersons, int from, int to)
-{
-    if(to > nrPersons)
-        return;
-
-    for(int i=from; i<=to; i++)
-        if(persons[i].name != NULL)
-            printf("(%s %f) ", persons[i].name, persons[i].height);
-    printf("\n");
-}
-
-void bubbleSort(struct person persons[], int nrPersons, int *swapped)
-{
-    *swapped = 0;
-    int i, j;
-    for (i = 0; i < nrPersons - 1; i++)
-        for (j = 0; j < nrPersons - i - 1; j++)
-            if (comparatie(persons[j], persons[j+1])==-1)
-            {
-                struct person aux;
-                aux = persons[j];
-                persons[j] = persons[j+1];
-                persons[j+1] = aux;
-                (*swapped)++;
-                printf("after swap "); printPersons(persons, nrPersons, 0, nrPersons-1);
-            }
-    printf("nr of swaps %d", *swapped);
-}
-
-void insertPerson(struct person persons[], int nrPersons, int newEntry, char *newName, float newHeight)
-{
-    //verific daca indexul este valid
-    //
-    if(persons[newEntry].name == NULL)
-    {
-        //poti sa adaugi
-        persons[newEntry].name = (char *) malloc(sizeof(char) * (strlen(newName)+1));
-        strcpy(persons[newEntry].name, newName);
-        persons[newEntry].height = newHeight;
-    }else
-    {
-        //pozitia este deja ocupara deci, eroare
-    }
-}
-
-void replacePerson(struct person persons[], int nrPersons,  int newEntry, char *newName, float newHeight)
-{
-    //verifici daca exista, daca exista ii eliberezi memoria il faci la loc NULL si 0.0
-    //il adaugi oricum
-}
-
-
 int main(void)
 {
 
@@ -163,7 +163,7 @@ int main(void)
 
     char cmd; 
     do {
-        printf ("Command? \n");
+        printf ("Command? ");
         scanf(" %c",&cmd); // notice the space before the %
     
         switch(cmd)
