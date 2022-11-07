@@ -119,8 +119,8 @@ int main(void)
     //numar_solutii = 0;
     //n5_distinct(0, v, &numar_solutii);
 
-    numar_solutii = 0;
-    anagrame(0, v, &numar_solutii, "TANC");
+    //numar_solutii = 0;
+    //anagrame(0, v, &numar_solutii, "TANC");
 
     
     return 0;
