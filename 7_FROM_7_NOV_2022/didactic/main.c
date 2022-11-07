@@ -182,6 +182,24 @@ void sortare(char **cuv, int nr_cuv_max, struct defs *definitii)
     }
 }
 
+void adauga_din_fis(char **cuv, int nr_cuv_max, struct defs *definitii, char *nume_fis)
+{
+    FILE * fis;
+    //https://cplusplus.com/reference/cstdio/fopen/
+    fis = fopen(nume_fis, "r+");
+    if(fis == NULL)
+        return;
+
+    char cuvant[255];
+    char defintie[1024];
+
+    while ( fscanf(fis,"%s", cuvant) > 0 )
+    {
+        fgets(defintie, 1024, fis);
+        adaug_cuv(cuv, nr_cuv_max, cuvant);
+        adaugare_def(cuv,nr_cuv_max, definitii, cuvant, defintie);
+    }
+}
 
 int main(void)
 {
@@ -211,12 +229,17 @@ int main(void)
     adaug_cuv(cuv, nr_cuvinte, "pere");
     adaug_cuv(cuv, nr_cuvinte, "portocale");
     adaug_cuv(cuv, nr_cuvinte, "banane");
+
+    //fucntie in care imi citesti dintr-un fisier cuvintele si le adaugi
+
+
     print_cuv(cuv, nr_cuvinte);
 
     printf("Gasit pe pozitia %d\n", cautare(cuv, nr_cuvinte, "banane"));
     stergere(cuv, nr_cuvinte, "banane");
     stergere(cuv, nr_cuvinte, "banane");
     stergere(cuv, nr_cuvinte, "are");
+    adauga_din_fis(cuv, nr_cuvinte, &definitii, "cuvinte.txt");
     print_cuv(cuv, nr_cuvinte);
     //functie care introduce un cuvant pe prima poztie libera    
 
@@ -233,7 +256,11 @@ int main(void)
     printare_def(cuv,nr_cuvinte,&definitii);
     printare_def_rec(cuv,nr_cuvinte,&definitii, 0);
 
+
     //fa si meniul
+    //sa faci un execitiu aloca dinamic 2 matrici de 3pe3 si inmulteste - asta o gasesti si pe net
+    //uite-te din nou pe ce am facut atunci la backtracking sau cauta pe net ecxemple de backtracking
+
 
     //aliberarea definitiilor
     free(definitii.coresdpondenta);
