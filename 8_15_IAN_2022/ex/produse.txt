@@ -1,0 +1,7 @@
+beer 10
+wine 20
+water 5
+crisps 18
+chips 18
+burrito 18
+donkey 18
